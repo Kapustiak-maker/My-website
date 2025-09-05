@@ -10,7 +10,7 @@
     * {margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', sans-serif;}
     body {background:#0a0a0a; color:#ffffff; overflow-x:hidden;}
     a {text-decoration:none; color:inherit;}
-    
+
     ::-webkit-scrollbar {width:8px;}
     ::-webkit-scrollbar-track {background:#0a0a0a;}
     ::-webkit-scrollbar-thumb {background:#666666; border-radius:4px;}
@@ -33,7 +33,7 @@
         align-items:center;
         text-align:center;
         padding:0 20px;
-        background: 
+        background:
             radial-gradient(circle at 20% 30%, rgba(60, 60, 60, 0.2) 0%, transparent 40%),
             radial-gradient(circle at 80% 70%, rgba(100, 100, 120, 0.15) 0%, transparent 40%),
             linear-gradient(135deg, #0a0a0a 0%, #121212 100%);
@@ -52,24 +52,24 @@
         pointer-events:none;
     }
     .hero h2 {font-size:3rem; margin-bottom:15px; animation:fadeUp 1.2s ease; color:#ffffff; background:none; -webkit-text-fill-color:#ffffff;}
-    .hero p {font-size:1.1rem; color:#ffffff; max-width:600px; margin:0 auto 30px; animation:fadeUp 1.8s ease;}
-    .hero-buttons {margin-top:40px; display:flex; gap:15px;}
+    .hero p.hero-subtitle { 
+      font-size:1.1rem;
+      color:#ffffff;
+      max-width:600px;
+      margin:10px auto 30px; 
+      animation:fadeUp 1.8s ease;
+    }
+    .hero-buttons {margin-top:20px; display:flex; flex-direction: column; gap:15px; align-items: center;}
     .btn {padding:12px 30px; border-radius:50px; font-weight:500; font-size:1rem; transition:all 0.3s ease; display:inline-block;}
-    
+
     .scroll-arrow {
         display: flex;
         flex-direction: column;
         align-items: center;
         animation: bounce 2s infinite;
+        margin-top: 40px;
     }
-    
-    .scroll-arrow {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 10px;
-    }
-    
+
     .scroll-arrow span {
         display: block;
         width: 8px;
@@ -80,21 +80,21 @@
         margin: -4px 0;
         animation: arrowDown 2s infinite;
     }
-    
+
     .scroll-arrow span:nth-child(2) {
         animation-delay: -0.2s;
     }
-    
+
     .scroll-arrow span:nth-child(3) {
         animation-delay: -0.4s;
     }
-    
+
     @keyframes bounce {
         0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
         40% {transform: translateY(-10px) translateX(-50%);}
         60% {transform: translateY(-5px) translateX(-50%);}
     }
-    
+
     @keyframes arrowDown {
         0% {opacity: 0; transform: rotate(45deg) translate(-10px, -10px);}
         50% {opacity: 1;}
@@ -106,6 +106,34 @@
     section {padding:100px 10%; text-align:center; opacity:0; transform:translateY(50px); transition:all 1s ease;}
     section.show {opacity:1; transform:translateY(0);}
     section h2 {font-size:2rem; margin-bottom:25px; color:#ffffff; letter-spacing:1px;}
+    section .section-title { 
+        position:relative;
+        display:inline-block;
+        margin-bottom:50px;
+        font-size:2.5rem;
+        font-weight:700;
+        color:#ffffff;
+        text-transform:uppercase;
+        letter-spacing:2px;
+    }
+    section .section-title:after { 
+        content:'';
+        position:absolute;
+        bottom:-15px;
+        left:50%;
+        transform:translateX(-50%);
+        width:0;
+        height:3px;
+        background:#ffffff;
+        border-radius:3px;
+        animation: lineAppear 0.8s ease-out forwards;
+    }
+
+    @keyframes lineAppear {
+        0% { width: 0; opacity: 0; }
+        100% { width: 80px; opacity: 1; }
+    }
+
     section ul {list-style:none; line-height:2; font-size:1rem;}
 
     .pricing-grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;}
@@ -118,19 +146,58 @@
     .gallery-container {position:relative; width:100%; padding:20px 0;}
     .gallery-track {display:flex; gap:25px; padding:20px 0; transition:transform 0.5s ease-out; will-change:transform;}
     .gallery-track.animated {transition:transform 0.3s ease-out;}
-    
-    .gallery-item {position:relative; flex:0 0 auto; width:350px; height:250px; border-radius:16px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.3); transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);}
-    .gallery-item img {width:100%; height:100%; object-fit:cover; transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);}
-    .gallery-caption {position:absolute; bottom:0; left:0; right:0; padding:20px; background:linear-gradient(transparent, rgba(20, 20, 25, 0.95)); color:#ffffff; transform:translateY(100%); transition:transform 0.3s ease;}
-    .gallery-item:hover {transform:translateY(-5px) scale(1.02); box-shadow:0 15px 40px rgba(100, 100, 100, 0.25);}
-    .gallery-item:hover .gallery-caption {transform:translateY(0);}
-    
+
+    .gallery-item {
+        position:relative;
+        flex:0 0 auto;
+        width:350px;
+        height:250px;
+        border-radius:16px;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,0.3);
+        transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer; 
+    }
+    .gallery-item img {
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        transition:transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0; 
+        animation: fadeIn 0.5s ease-in forwards; 
+    }
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+    .gallery-caption {
+        position:absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        padding:20px;
+        background:linear-gradient(transparent, rgba(20, 20, 25, 0.95));
+        color:#ffffff;
+        transform:translateY(100%);
+        transition:transform 0.3s ease;
+    }
+    .gallery-item:hover {
+        transform:translateY(-5px) scale(1.02);
+        box-shadow:0 15px 40px rgba(100, 100, 100, 0.25);
+    }
+    .gallery-item:hover img {
+        transform: scale(1.05); 
+    }
+    .gallery-item:hover .gallery-caption {
+        transform:translateY(0);
+    }
+
+
     .scroll-indicator {position:absolute; top:50%; transform:translateY(-50%); width:50px; height:50px; background:rgba(40, 40, 40, 0.8); border:2px solid #666666; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; z-index:10; transition:all 0.3s ease; backdrop-filter:blur(5px);}
     .scroll-indicator:hover {background:rgba(80, 80, 80, 0.6); transform:translateY(-50%) scale(1.1);}
     .scroll-left {left:20px;}
     .scroll-right {right:20px;}
     .scroll-indicator i {font-size:1.5rem; color:#cccccc;}
-    
+
     .gallery-section::-webkit-scrollbar {display:none;}
     .gallery-section {-ms-overflow-style:none; scrollbar-width:none;}
 
@@ -141,18 +208,102 @@
     .info-item i {font-size:1.5rem; color:#cccccc; margin-right:15px; width:30px; text-align:center;}
     .info-item p {margin:0; font-size:1rem; color:#ffffff;}
 
-    .pricing-card {background:rgba(30, 30, 30, 0.7); border:1px solid rgba(200, 200, 200, 0.1); padding:30px; border-radius:16px; transition:all 0.4s ease; backdrop-filter:blur(10px);}
-    .pricing-card:hover {transform:translateY(-10px); box-shadow:0 15px 30px rgba(100, 100, 100, 0.3);}
-    .pricing-header {margin-bottom:20px; text-align:center;}
-    .pricing-header h3 {font-size:1.4rem; color:#ffffff; margin-bottom:10px;}
-    .price {font-size:1.8rem; font-weight:700; color:#ffffff; background:none; -webkit-text-fill-color:#ffffff;}
-    .pricing-features {list-style:none; text-align:center; margin:25px 0 0 0; padding:0;}
-    .pricing-features li {margin:15px 0; padding:8px 0; position:relative; color:#ffffff; background:rgba(50, 50, 50, 0.2); border-radius:6px; transition:all 0.3s ease;}
-    .pricing-features li:hover {background:rgba(80, 80, 80, 0.2); transform:translateX(5px);}
-    .pricing-features li:before {content:'✓'; color:#cccccc; position:absolute; left:15px;}
-    .pricing-card.featured {background:rgba(50, 50, 50, 0.8); border:1px solid #888888; transform:scale(1.05); position:relative; overflow:hidden;}
-    .pricing-card.featured:before {content:''; position:absolute; top:0; left:0; width:100%; height:3px; background:linear-gradient(90deg, #888888, #cccccc);}
-    .pricing-card.featured:hover {transform:scale(1.07) translateY(-10px); box-shadow:0 20px 40px rgba(100, 100, 100, 0.4);}
+    .pricing-card {
+        background:rgba(30, 30, 30, 0.7);
+        border:1px solid rgba(200, 200, 200, 0.1);
+        padding:30px;
+        border-radius:16px;
+        transition:all 0.4s ease;
+        backdrop-filter:blur(10px);
+        display: flex;
+        flex-direction: column;
+    }
+    .pricing-card:hover {
+        transform:translateY(-10px);
+        box-shadow:0 15px 30px rgba(100, 100, 100, 0.3);
+    }
+    .pricing-header {
+        margin-bottom:20px;
+        text-align:center;
+    }
+    .pricing-header h3 {
+        font-size:1.4rem;
+        color:#ffffff;
+        margin-bottom:10px;
+    }
+    .price {
+        font-size:1.8rem;
+        font-weight:700;
+        color:#ffffff;
+        background:none;
+        -webkit-text-fill-color:#ffffff;
+        margin: 10px 0; 
+    }
+    .pricing-features {
+        list-style:none;
+        text-align:center;
+        margin:25px 0 0 0;
+        padding:0;
+        flex-grow: 1; 
+    }
+    .pricing-features li {
+        margin:15px 0;
+        padding:8px 0;
+        position:relative;
+        color:#ffffff;
+        background:rgba(50, 50, 50, 0.2);
+        border-radius:6px;
+        transition:all 0.3s ease;
+    }
+    .pricing-features li:hover {
+        background:rgba(80, 80, 80, 0.2);
+        transform:translateX(5px);
+    }
+    .pricing-features li:before {
+        content:'✓';
+        color:#cccccc;
+        position:absolute;
+        left:15px;
+    }
+    .pricing-card.featured {
+        background:rgba(50, 50, 50, 0.8);
+        border:1px solid #888888;
+        transform:scale(1.05);
+        position:relative;
+        overflow:hidden;
+    }
+    .pricing-card.featured:before {
+        content:'';
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:3px;
+        background:linear-gradient(90deg, #888888, #cccccc);
+    }
+    .pricing-card.featured:hover {
+        transform:scale(1.07) translateY(-10px);
+        box-shadow:0 20px 40px rgba(100, 100, 100, 0.4);
+    }
+    .detailed-pricing-btn {
+        margin: 40px auto 0; 
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        display: inline-block;
+        background: rgba(100, 100, 100, 0.1);
+        border: 1px solid #666666;
+        color: #ffffff;
+        cursor: pointer;
+    }
+    .detailed-pricing-btn:hover {
+        background: rgba(150, 150, 150, 0.3);
+        color: #ffffff;
+        box-shadow: 0 0 25px rgba(150, 150, 150, 0.3);
+        transform: translateY(-3px);
+    }
 
     .contact-methods {display:flex; flex-direction:column; align-items:center; gap:20px; margin:40px 0;}
     .contact-method {display:flex; align-items:center; justify-content:center; gap:12px; font-size:1.1rem; background:rgba(50, 50, 50, 0.2); padding:12px 25px; border-radius:50px; border:1px solid rgba(200, 200, 200, 0.1); transition:all 0.3s ease; min-width:250px;}
@@ -165,27 +316,84 @@
 
     .bg-dark {background:linear-gradient(135deg, #0a0a0a 0%, #121212 100%); padding:80px 10%; position:relative; overflow:hidden;}
     .bg-dark:before {content:''; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(200, 200, 200, 0.2), transparent);}
-    
-    section h2 {position:relative; display:inline-block; margin-bottom:50px; font-size:2.5rem; font-weight:700; color:#ffffff; text-transform:uppercase; letter-spacing:2px;}
-    section h2:after {
-        content:'';
-        position:absolute;
-        bottom:-15px;
-        left:50%;
-        transform:translateX(-50%);
-        width:0;
-        height:3px;
-        background:#ffffff;
-        border-radius:3px;
-        animation: lineAppear 0.8s ease-out forwards;
+
+    .skills-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
     }
-    
-    @keyframes lineAppear {
-        0% { width: 0; opacity: 0; }
-        100% { width: 80px; opacity: 1; }
+    .skill-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: rgba(50, 50, 50, 0.2);
+        border: 1px solid rgba(200, 200, 200, 0.1);
+        padding: 10px 20px;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+    .skill-badge:hover {
+        background: rgba(80, 80, 80, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(100, 100, 100, 0.2);
+    }
+    .skill-badge i {
+        color: #cccccc;
+        font-size: 1.2rem;
+    }
+    .skill-badge span {
+        color: #ffffff;
+        font-size: 0.95rem;
     }
 
-    .modal {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(10,10,10,0.95); backdrop-filter:blur(10px); justify-content:center; align-items:center; z-index:2000;}
+
+    .agreement-text {
+      color: #66ccff; 
+      font-size: 0.9rem;
+      margin: 15px 0;
+      max-width: 600px;
+      text-decoration: underline; 
+      cursor: pointer; 
+    }
+    .agreement-text:hover {
+        color: #99ddff; 
+    }
+
+    .order-btn {
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 500;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      background: rgba(100, 100, 100, 0.1);
+      border: 1px solid #666666;
+      color: #ffffff;
+      margin-top: 10px;
+    }
+    .order-btn:hover {
+      background: rgba(150, 150, 150, 0.3);
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(150, 150, 150, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .modal {
+        display:none;
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        background:rgba(10,10,10,0.95);
+        backdrop-filter:blur(10px);
+        justify-content:center;
+        align-items:center;
+        z-index:2000;
+    }
     .modal-content {
       background: #1a1a1a;
       padding: 40px;
@@ -201,14 +409,14 @@
       transform: translateY(20px);
       animation: modalFadeIn 0.4s ease-out forwards;
     }
-    
+
     @keyframes modalFadeIn {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .modal-content h2 {
       color: #ffffff;
       margin: 0 0 25px 0;
@@ -219,11 +427,11 @@
       font-weight: 600;
       letter-spacing: 0.5px;
     }
-    
+
     .modal-content h2:after {
       display: none;
     }
-    
+
     .agreement-intro {
       text-align: center;
       font-size: 1.1rem;
@@ -235,18 +443,18 @@
       opacity: 0;
       animation: fadeIn 0.5s ease-out 0.2s forwards;
     }
-    
+
     .agreement-content {
       margin-top: 15px;
     }
-    
+
     .agreement-section {
       margin-bottom: 30px;
       opacity: 0;
       transform: translateY(15px);
       animation: fadeInUp 0.5s ease-out forwards;
     }
-    
+
     .agreement-section:nth-child(1) { animation-delay: 0.3s; }
     .agreement-section:nth-child(2) { animation-delay: 0.4s; }
     .agreement-section:nth-child(3) { animation-delay: 0.5s; }
@@ -254,20 +462,20 @@
     .agreement-section:nth-child(5) { animation-delay: 0.7s; }
     .agreement-section:nth-child(6) { animation-delay: 0.8s; }
     .agreement-section:nth-child(7) { animation-delay: 0.9s; }
-    
+
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     @keyframes fadeIn {
       to {
         opacity: 1;
       }
     }
-    
+
     .modal-content h3 {
       color: #ffffff;
       margin: 0 0 15px 0;
@@ -277,11 +485,11 @@
       padding-bottom: 8px;
       border-bottom: 1px solid #2a2a2a;
     }
-    
+
     .modal-content h3:before {
       display: none;
     }
-    
+
     .modal-content ol {
       text-align: left;
       line-height: 1.8;
@@ -289,7 +497,7 @@
       padding: 0;
       list-style-type: none;
     }
-    
+
     .modal-content ol > li {
       margin-bottom: 12px;
       color: #e0e0e0;
@@ -298,7 +506,7 @@
       font-size: 1rem;
       line-height: 1.7;
     }
-    
+
     .modal-content ol > li:before {
       content: '•';
       position: absolute;
@@ -307,11 +515,11 @@
       font-size: 1.2em;
       line-height: 1;
     }
-    
+
     .modal-content ol > li:before {
       display: none;
     }
-    
+
     .close {
       position: absolute;
       top: 15px;
@@ -340,28 +548,124 @@
       justify-content: center;
       border-radius: 50%;
     }
-    
+
     .close:hover {
       color: #ffffff;
       background: rgba(255, 255, 255, 0.05);
       transform: rotate(90deg);
     }
 
+    #lightboxModal {
+        z-index: 3000; 
+        background: rgba(0, 0, 0, 0.9);
+    }
+    #lightboxModal .modal-content {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        max-width: 90vw;
+        max-height: 90vh;
+        width: auto;
+        height: auto;
+        animation: none; 
+        opacity: 1;
+        transform: none;
+    }
+    #lightboxModal .modal-content {
+        animation: popIn 0.3s ease-out forwards;
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    @keyframes popIn {
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+    #lightboxModal .close {
+        color: white;
+        font-size: 2.5rem;
+        top: 20px;
+        right: 30px;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+    }
+    #lightboxModal .close:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
+    }
+    .lightbox-img {
+        max-width: 100%;
+        max-height: 80vh;
+        display: block;
+        margin: 0 auto;
+        border-radius: 4px;
+    }
+    .lightbox-caption {
+        text-align: center;
+        color: white;
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+
+    #detailedPricingModal .modal-content {
+        max-width: 900px; 
+    }
+    .pricing-details-intro {
+        text-align: center;
+        font-size: 1.1rem;
+        margin: 0 auto 30px;
+        color: #e0e0e0;
+        font-weight: 400;
+        line-height: 1.7;
+        max-width: 700px;
+    }
+    .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        color: #e0e0e0;
+    }
+    .pricing-table th, .pricing-table td {
+        border: 1px solid #333;
+        padding: 12px 15px;
+        text-align: left;
+    }
+    .pricing-table th {
+        background-color: rgba(50, 50, 50, 0.5);
+        color: #ffffff;
+    }
+    .pricing-table tr:nth-child(even) {
+       background-color: rgba(40, 40, 40, 0.3);
+    }
+    .robux-info {
+        font-size: 0.9rem;
+        color: #aaaaaa;
+        text-align: center;
+        margin-top: 20px;
+        font-style: italic;
+    }
+
+
     @keyframes fadeUp {from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);}}
     @keyframes fadeScale {from{opacity:0; transform:scale(0.95); box-shadow:0 0 0 rgba(0, 0, 0, 0);} to{opacity:1; transform:scale(1); box-shadow:0 10px 40px rgba(0, 0, 0, 0.3);}}
-    
+
     @keyframes glow {
         0% {text-shadow:0 0 5px rgba(0, 255, 208, 0.3);}
         50% {text-shadow:0 0 20px rgba(0, 255, 208, 0.6);}
         100% {text-shadow:0 0 5px rgba(0, 255, 208, 0.3);}
     }
-    
+
     @keyframes pulse {
         0% {box-shadow:0 0 0 0 rgba(0, 255, 208, 0.2);}
         70% {box-shadow:0 0 0 10px rgba(0, 255, 208, 0);}
         100% {box-shadow:0 0 0 0 rgba(0, 255, 208, 0);}
     }
-    
+
     @media (max-width: 768px) {
         header {padding:15px 20px;}
         nav a {margin-left:15px; font-size:0.9rem;}
@@ -370,6 +674,9 @@
         .pricing-card {margin-bottom:20px;}
         .pricing-card.featured {transform:scale(1.02);}
         .pricing-card.featured:hover {transform:scale(1.04) translateY(-5px);}
+        .gallery-item {
+            width: calc(100vw - 60px); 
+        }
     }
   </style>
 </head>
@@ -378,8 +685,10 @@
     <h1 class="logo">Kapustiack</h1>
     <nav>
       <a href="#about">About</a>
+      <a href="#skills">Skills</a> 
       <a href="#pricing">Pricing</a>
       <a href="#portfolio">Portfolio</a>
+      <a href="#reviews">Reviews</a> 
       <a href="#contact">Contact</a>
       <a href="#" id="agreementBtn">Agreement</a>
     </nav>
@@ -387,8 +696,13 @@
 
   <section class="hero">
     <h2>3D <span>MODELER</span> & <span>ROBLOX</span> <span>DEVELOPER</span></h2>
-    <p>Crafting immersive 3D experiences for Roblox</p>
-    <a href="https://discord.com/users/vlad_84177" target="_blank" class="contact-link">( ✦ ) Contact me on Discord</a>
+    <p class="hero-subtitle">Crafting immersive 3D experiences for Roblox</p> 
+    <div class="hero-buttons">
+        <a href="https://discord.com/users/vlad_84177" target="_blank" class="contact-link">( ✦ ) Contact me on Discord</a>
+        <a href="#" id="orderBtn" class="order-btn">Order Here</a> 
+        <a href="https://discord.gg/sy89bTvKnm" target="_blank" class="contact-link">( 🚀 ) Join Discord Server</a>
+        <p class="agreement-text" id="agreementLink">By using my services, you automatically agree to the Terms of Service.</p> 
+    </div>
     <div style="margin-top: 20px;">
         <div class="scroll-arrow">
             <span></span>
@@ -399,7 +713,7 @@
   </section>
 
   <section id="about">
-    <h2>👤 About Me</h2>
+    <h2 class="section-title">👤 About Me</h2> 
     <div class="about-content">
       <div class="about-text">
         <div class="info-item">
@@ -418,8 +732,46 @@
     </div>
   </section>
 
+  <section id="skills" class="bg-dark">
+    <h2 class="section-title">🛠️ My Skills</h2>
+    <div class="skills-container">
+        <div class="skill-badge">
+            <i class="fab fa-blender"></i> 
+            <span>Blender</span>
+        </div>
+        <div class="skill-badge">
+            <i class="fas fa-gamepad"></i> 
+            <span>Roblox Studio</span>
+        </div>
+         <div class="skill-badge">
+            <i class="fas fa-paint-brush"></i> 
+            <span>Texturing</span>
+        </div>
+        <div class="skill-badge">
+            <i class="fas fa-cogs"></i> 
+            <span>Rigging</span>
+        </div>
+         <div class="skill-badge">
+            <i class="fas fa-code"></i> 
+            <span>Scripting</span>
+        </div>
+        <div class="skill-badge">
+            <i class="fas fa-lightbulb"></i> 
+            <span>Creative Design</span>
+        </div>
+        <div class="skill-badge">
+            <i class="fas fa-tachometer-alt"></i> 
+            <span>Optimization</span>
+        </div>
+        <div class="skill-badge">
+            <i class="fas fa-mobile-alt"></i> 
+            <span>Mobile-Friendly</span>
+        </div>
+    </div>
+  </section>
+
   <section id="pricing" class="bg-dark">
-    <h2>💸 Services & Pricing</h2>
+    <h2 class="section-title">💸 Services & Pricing</h2> 
     <div class="pricing-grid">
       <div class="pricing-card">
         <div class="pricing-header">
@@ -457,84 +809,56 @@
         </ul>
       </div>
     </div>
+    <button id="detailedPricingBtn" class="detailed-pricing-btn">View Detailed Pricing</button>
   </section>
 
   <section id="portfolio" class="gallery-section">
-    <h2>📂 My Work</h2>
+    <h2 class="section-title">📂 My Work</h2> 
     <div class="gallery-container">
       <div class="scroll-indicator scroll-left"><i class="fas fa-chevron-left"></i></div>
       <div class="gallery-track" id="galleryTrack">
-        <div class="gallery-item">
-          <img src="MyWork/1.webp" alt="3D Model 1">
-          <div class="gallery-caption">3D Model #1</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/2.webp" alt="3D Model 2">
-          <div class="gallery-caption">3D Model #2</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/3.webp" alt="3D Model 3">
-          <div class="gallery-caption">3D Model #3</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/4.webp" alt="3D Model 4">
-          <div class="gallery-caption">3D Model #4</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/5.webp" alt="3D Model 5">
-          <div class="gallery-caption">3D Model #5</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/6.webp" alt="3D Model 6">
-          <div class="gallery-caption">3D Model #6</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/7.webp" alt="3D Model 7">
-          <div class="gallery-caption">3D Model #7</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/8.webp" alt="3D Model 8">
-          <div class="gallery-caption">3D Model #8</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/9.webp" alt="3D Model 9">
-          <div class="gallery-caption">3D Model #9</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/10.webp" alt="3D Model 10">
-          <div class="gallery-caption">3D Model #10</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/11.webp" alt="3D Model 11">
-          <div class="gallery-caption">3D Model #11</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/12.webp" alt="3D Model 12">
-          <div class="gallery-caption">3D Model #12</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/13.webp" alt="3D Model 13">
-          <div class="gallery-caption">3D Model #13</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/14.webp" alt="3D Model 14">
-          <div class="gallery-caption">3D Model #14</div>
-        </div>
-        <div class="gallery-item">
-          <img src="MyWork/15.webp" alt="3D Model 15">
-          <div class="gallery-caption">3D Model #15</div>
-        </div>
       </div>
       <div class="scroll-indicator scroll-right"><i class="fas fa-chevron-right"></i></div>
     </div>
   </section>
 
+  <section id="reviews" class="bg-dark">
+    <h2 class="section-title">⭐ Client Reviews</h2>
+    <div class="reviews-container">
+      <div class="review-item">
+        <strong>bradley</strong>
+        <div class="review-text">10/10, made very fast, cheap for the quality on the models and very helpful</div>
+      </div>
+      <div class="review-item">
+        <strong>Cay #FREESCHLEP</strong>
+        <div class="review-text">He made some really gd models n the prices weren't that high either 9.5/10</div>
+      </div>
+      <div class="review-item">
+        <strong>ejderhavcisi12</strong>
+        <div class="review-text">he kinda works for me tho hes the best modeler i seen</div>
+      </div>
+      <div class="review-item">
+        <strong>freezing Lewis</strong>
+        <div class="review-text">I am very much of satisfied with the product</div>
+      </div>
+      <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #aaaaaa;">All reviews are from my Discord server where anyone can verify them.</p>
+    </div>
+  </section>
+
   <section id="contact" class="bg-dark">
-    <h2>📩 Get In Touch</h2>
+    <h2 class="section-title">📩 Get In Touch</h2> 
     <div class="contact-methods">
       <div class="contact-method">
         <i class="fab fa-discord"></i>
         <span>vlad_84177</span>
+      </div>
+      <a href="https://discord.gg/sy89bTvKnm" target="_blank" class="contact-method" style="text-decoration: none;">
+        <i class="fab fa-discord"></i>
+        <span>Join Discord to order</span>
+      </a>
+      <div class="contact-method">
+        <i class="fab fa-telegram"></i>
+        <span>@ssquit</span>
       </div>
       <div class="contact-method">
         <i class="fas fa-gamepad"></i>
@@ -550,7 +874,7 @@
       <h2>Terms of Service</h2>
       <p class="agreement-intro">You must agree to these terms before working with me.</p>
       <p><strong>Last updated: August 30, 2025</strong></p>
-      
+
       <div class="agreement-content">
         <h3>1. Commissioning Process</h3>
         <ol>
@@ -601,54 +925,109 @@
         <h3>8. Agreement</h3>
         <p>By commissioning me, you agree to these terms.</p>
       </div>
-            <li>10% deposit required upfront, remaining 90% upon completion.</li>
-            <li>Payments accepted via PayPal, Robux, or other agreed methods.</li>
-            <li>Final delivery after full payment is received.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Revisions</strong>
-          <ol>
-            <li>Minor adjustments included in the initial price.</li>
-            <li>Major changes may require additional payment.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Delivery</strong>
-          <ol>
-            <li>Files delivered in .FBX, .BLEND, or .RBXM format via Discord.</li>
-            <li>Agreed deadlines will be prioritized, with communication about any delays.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Usage Rights</strong>
-          <ol>
-            <li>Full rights transfer upon final payment.</li>
-            <li>I may showcase the work in my portfolio unless otherwise agreed.</li>
-            <li>Reselling or redistribution without permission is prohibited.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Refund Policy</strong>
-          <ol>
-            <li>Full refund if canceled before work begins.</li>
-            <li>Partial refund based on work completed if canceled mid-project.</li>
-            <li>No refunds after final delivery.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Confidentiality</strong>
-          <ol>
-            <li>All project details remain confidential unless sharing is approved.</li>
-          </ol>
-        </li>
-        
-        <li><strong>Agreement</strong>
-          <p>By commissioning me, you agree to these terms.</p>
-        </li>
-      </ol>
-      
-      <p style="text-align: right; margin-top: 20px;">Last updated: August 30, 2025</p>
+    </div>
+  </div>
+
+  <div id="orderModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>How to Order</h2>
+      <p class="agreement-intro">Follow these steps to place your order:</p>
+
+      <div class="agreement-content">
+        <div class="agreement-section">
+          <h3>1. Join the Discord Server</h3>
+          <p>Click the link below to join my Discord server where all communication and orders take place:</p>
+          <p style="text-align: center; margin-top: 10px;"><a href="https://discord.gg/sy89bTvKnm" target="_blank" style="color: #66ccff; font-weight: bold;">Join Discord Server</a></p>
+        </div>
+
+        <div class="agreement-section">
+          <h3>2. Contact Me</h3>
+          <p>Once you're in the server, you can create a ticket in the dedicated channel or send me a direct message (DM). Both options are valid for starting your order.</p>
+          <p><strong>Creating a Ticket:</strong> This allows us to have a private conversation thread specifically for your project, keeping everything organized.</p>
+          <p><strong>Sending a DM:</strong> This is a quick way to get started. I'll then guide you through the process.</p>
+        </div>
+
+        <div class="agreement-section">
+          <h3>3. Provide Details</h3>
+          <p>Let me know what you need. Please include as much detail as possible, such as:</p>
+          <ul style="text-align: left; margin-top: 10px;">
+            <li>The type of model or asset</li>
+            <li>Style reference (if you have one)</li>
+            <li>Intended use (e.g., for a Roblox game)</li>
+            <li>Your deadline</li>
+          </ul>
+        </div>
+
+        <div class="agreement-section">
+          <h3>4. Get a Quote</h3>
+          <p>I will review your request and provide an estimated price and timeline.</p>
+        </div>
+
+        <div class="agreement-section">
+          <h3>5. Make Payment</h3>
+          <p>If you agree to the quote, we'll arrange payment. A 10% deposit is usually required to start.</p>
+        </div>
+
+        <div class="agreement-section">
+          <h3>6. Receive Your Work</h3>
+          <p>Once the work is complete and payment is finalized, I will deliver the files to you via Discord.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="lightboxModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
+
+  <div id="detailedPricingModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Detailed Pricing</h2>
+      <p class="pricing-details-intro">Explore my services and pricing options in detail, including equivalent values in Robux (approximate).</p>
+
+      <h3 style="margin-top: 30px;">Simple Models</h3>
+      <table class="pricing-table">
+        <thead>
+          <tr><th>Service</th><th>USD Price</th><th>Robux (Est.)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Basic Props (cubes, bottles, crates)</td><td>$1 - $3</td><td id="simple1-rbx"></td></tr>
+          <tr><td>Detailed Props (furniture, weapons)</td><td>$3 - $8</td><td id="simple2-rbx"></td></tr>
+          <tr><td>Low-poly to mid-poly quality</td><td>Included</td><td>-</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Props & Sets</h3>
+      <table class="pricing-table">
+        <thead>
+          <tr><th>Service</th><th>USD Price</th><th>Robux (Est.)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Stylized Prop Sets (5-10 items)</td><td>$8 - $25</td><td id="sets1-rbx"></td></tr>
+          <tr><td>Advanced Prop Sets (10+ assets)</td><td>$25 - $50+</td><td id="sets2-rbx"></td></tr>
+          <tr><td>Themed collections</td><td>Custom Quote</td><td>Custom Quote</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Environment Assets</h3>
+      <table class="pricing-table">
+        <thead>
+          <tr><th>Service</th><th>USD Price</th><th>Robux (Est.)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Single Environment Pieces</td><td>$10 - $40</td><td id="env1-rbx"></td></tr>
+          <tr><td>Modular Kits</td><td>$40 - $80</td><td id="env2-rbx"></td></tr>
+          <tr><td>Complete Map Asset Packs</td><td>$80 - $120+</td><td id="env3-rbx"></td></tr>
+        </tbody>
+      </table>
+
+      <p class="robux-info" id="robuxDisclaimer">* Robux values are approximate based on a rate of 300 Robux per USD. Actual conversion may vary. See <a href="https://rbxtax.com/devex.html" target="_blank" style="color: #66ccff;">rbxtax.com</a> for more info.</p>
     </div>
   </div>
 
@@ -664,7 +1043,7 @@
       transform: translate(-50%, -50%);
       transition: width 0.3s, height 0.3s, opacity 0.3s;
     }
-    
+
     .cursor-outline {
       width: 30px;
       height: 30px;
@@ -676,20 +1055,20 @@
       transform: translate(-50%, -50%);
       transition: all 0.1s ease-out;
     }
-    
+
     .cursor-dot.hover {
       width: 12px;
       height: 12px;
       background-color: #ffffff;
     }
-    
+
     .cursor-outline.hover {
       width: 40px;
       height: 40px;
       border-color: #ffffff;
       background-color: rgba(255, 255, 255, 0.1);
     }
-    
+
     :root {
       --primary-color: #333333;
       --secondary-color: #666666;
@@ -698,36 +1077,36 @@
       --bg-dark: #0a0a0a;
       --bg-light: #1a1a1a;
     }
-    
+
     body { background: var(--bg-dark); color: var(--text-color); }
-    
+
     header { background: rgba(20, 20, 20, 0.95); border-bottom: 1px solid var(--secondary-color); }
     .logo { color: var(--accent-color); }
     nav a { color: #cccccc; }
     nav a::after { background: var(--accent-color); }
     nav a:hover { color: var(--accent-color); }
-    
+
     .hero {
-      background: 
+      background:
         radial-gradient(circle at 20% 30%, rgba(51, 51, 51, 0.2) 0%, transparent 40%),
         radial-gradient(circle at 80% 70%, rgba(102, 102, 102, 0.15) 0%, transparent 40%),
         linear-gradient(135deg, var(--bg-dark) 0%, #111111 100%);
     }
-    
+
     .pricing-card { background: rgba(30, 30, 30, 0.9); border: 1px solid var(--secondary-color); }
     .pricing-card:hover { box-shadow: 0 0 25px rgba(102, 102, 102, 0.3); }
     .pricing-card.featured { background: rgba(40, 40, 40, 0.95); border-color: var(--accent-color); }
     .pricing-card.featured:hover { box-shadow: 0 0 35px rgba(153, 153, 153, 0.4); }
-    
+
     .contact-method { background: rgba(51, 51, 51, 0.2); border: 1px solid var(--secondary-color); }
     .contact-method:hover { background: rgba(102, 102, 102, 0.2); box-shadow: 0 0 15px rgba(102, 102, 102, 0.2); }
-    
+
     .modal-content { background: #121212; border: 1px solid var(--secondary-color); }
-    
+
     ::-webkit-scrollbar-thumb { background: var(--secondary-color); }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }
   </style>
-  
+
   <div class="cursor-dot"></div>
   <div class="cursor-outline"></div>
 
@@ -750,27 +1129,27 @@
 
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
-    
+
     window.addEventListener('mousemove', (e) => {
       const posX = e.clientX;
       const posY = e.clientY;
-      
+
       cursorDot.style.left = `${posX}px`;
       cursorDot.style.top = `${posY}px`;
-      
+
       cursorOutline.animate({
         left: `${posX}px`,
         top: `${posY}px`
       }, { duration: 300, fill: 'forwards' });
     });
-    
-    const clickableElements = document.querySelectorAll('a, button, .gallery-item, .pricing-card, .contact-method');
+
+    const clickableElements = document.querySelectorAll('a, button, .gallery-item, .pricing-card, .contact-method, .skill-badge');
     clickableElements.forEach(element => {
       element.addEventListener('mouseenter', () => {
         cursorDot.classList.add('hover');
         cursorOutline.classList.add('hover');
       });
-      
+
       element.addEventListener('mouseleave', () => {
         cursorDot.classList.remove('hover');
         cursorOutline.classList.remove('hover');
@@ -783,34 +1162,64 @@
       const scrollRightBtn = document.querySelector('.scroll-right');
       let isScrolling = false;
       let scrollInterval;
-      const scrollSpeed = 15; 
-      
+      const scrollSpeed = 15;
+
       function loadImages() {
-        const imageCount = 7; 
+        const imageCount = 15; 
         for (let j = 0; j < 2; j++) {
           for (let i = 1; i <= imageCount; i++) {
             const item = document.createElement('div');
             item.className = 'gallery-item';
+            item.setAttribute('data-caption', `3D Model #${i}`); 
             item.innerHTML = `
               <img src="MyWork/${i}.webp" alt="Work ${i}" loading="lazy">
               <div class="gallery-caption">
-                <h3>Project ${i}</h3>
+                <h3>${item.getAttribute('data-caption')}</h3>
                 <p>3D Model • Roblox</p>
               </div>
             `;
             galleryTrack.appendChild(item);
           }
         }
+
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightboxModal = document.getElementById('lightboxModal');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = lightboxModal.querySelector('.close');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const imgSrc = this.querySelector('img').src;
+                const caption = this.getAttribute('data-caption') || 'Image';
+                lightboxImg.src = imgSrc;
+                lightboxCaption.textContent = caption;
+                lightboxModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        lightboxClose.addEventListener('click', function() {
+            lightboxModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        lightboxModal.addEventListener('click', function(e) {
+            if (e.target === lightboxModal) {
+                lightboxModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
       }
-      
+
       loadImages();
-      
+
       function checkInfiniteScroll() {
         const firstItem = galleryTrack.firstElementChild;
-        const itemWidth = firstItem.offsetWidth + 25; 
+        const itemWidth = firstItem.offsetWidth + 25;
         const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(galleryTrack).transform);
-        
-        if (currentTransform.m41 < -itemWidth * 7) {
+
+        if (currentTransform.m41 < -itemWidth * 15) { 
           galleryTrack.style.transition = 'none';
           galleryTrack.appendChild(galleryTrack.firstElementChild);
           galleryTrack.style.transform = `translateX(${currentTransform.m41 + itemWidth}px)`;
@@ -821,83 +1230,179 @@
           galleryTrack.style.transform = `translateX(${currentTransform.m41 - itemWidth}px)`;
         }
       }
-      
+
       function scrollGallery(direction) {
         if (isScrolling) return;
         isScrolling = true;
-        
+
         const scrollAmount = (galleryTrack.firstElementChild.offsetWidth + 25) * direction;
         const currentTransform = new WebKitCSSMatrix(window.getComputedStyle(galleryTrack).transform);
-        
+
         galleryTrack.style.transition = 'transform 0.3s ease-out';
         galleryTrack.style.transform = `translateX(${currentTransform.m41 - scrollAmount}px)`;
-        
+
         galleryTrack.addEventListener('transitionend', function onTransitionEnd() {
           checkInfiniteScroll();
           isScrolling = false;
           galleryTrack.removeEventListener('transitionend', onTransitionEnd);
         });
       }
-      
+
       function setupButtonHold(button, direction) {
         let holdInterval;
-        
+
         const startScrolling = () => {
           if (holdInterval) clearInterval(holdInterval);
           scrollGallery(direction);
           holdInterval = setInterval(() => scrollGallery(direction), 100);
         };
-        
+
         const stopScrolling = () => {
           if (holdInterval) {
             clearInterval(holdInterval);
             holdInterval = null;
           }
         };
-        
+
         button.addEventListener('mousedown', startScrolling);
         button.addEventListener('mouseup', stopScrolling);
         button.addEventListener('mouseleave', stopScrolling);
-        
+
         button.addEventListener('touchstart', startScrolling, { passive: true });
         button.addEventListener('touchend', stopScrolling, { passive: true });
         button.addEventListener('touchcancel', stopScrolling, { passive: true });
       }
-      
-      setupButtonHold(scrollLeftBtn, -1);  
-      setupButtonHold(scrollRightBtn, 1);  
-      
+
+      setupButtonHold(scrollLeftBtn, -1);
+      setupButtonHold(scrollRightBtn, 1);
+
       scrollLeftBtn.addEventListener('click', () => scrollGallery(-1));
       scrollRightBtn.addEventListener('click', () => scrollGallery(1));
     });
-    
-    const modal = document.getElementById('agreementModal');
-    const closeBtn = document.querySelector('.close');
-    
+
+    const agreementModal = document.getElementById('agreementModal');
+    const closeAgreementBtn = agreementModal.querySelector('.close');
+
     document.getElementById('agreementBtn').addEventListener('click', function(e) {
       e.preventDefault();
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden'; 
+      agreementModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
-    
-    closeBtn.addEventListener('click', function() {
-      modal.style.display = 'none';
-      document.body.style.overflow = 'auto'; 
+
+    document.getElementById('agreementLink').addEventListener('click', function(e) {
+      agreementModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
     });
-    
+
+    closeAgreementBtn.addEventListener('click', function() {
+      agreementModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
     window.addEventListener('click', function(e) {
-      if (e.target === modal) {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; 
+      if (e.target === agreementModal) {
+        agreementModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
       }
     });
-    
+
+    const orderModal = document.getElementById('orderModal');
+    const closeOrderBtn = orderModal.querySelector('.close');
+    const orderBtn = document.getElementById('orderBtn');
+
+    orderBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      orderModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeOrderBtn.addEventListener('click', function() {
+      orderModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target === orderModal) {
+        orderModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    const detailedPricingModal = document.getElementById('detailedPricingModal');
+    const detailedPricingBtn = document.getElementById('detailedPricingBtn');
+    const closeDetailedPricingBtn = detailedPricingModal.querySelector('.close');
+
+    const ROBUX_PER_USD = 300;
+
+    function convertToRobux(usdString) {
+        const numbers = usdString.match(/\d+(\.\d+)?/g);
+        if (!numbers) return "N/A";
+
+        if (numbers.length === 1) {
+            const value = parseFloat(numbers[0]);
+            if (isNaN(value)) return "N/A";
+            return `~${Math.round(value * ROBUX_PER_USD)} Robux`;
+        } else if (numbers.length >= 2) {
+            const min = parseFloat(numbers[0]);
+            const max = parseFloat(numbers[1]);
+            if (isNaN(min) || isNaN(max)) return "N/A";
+            const maxDisplay = usdString.includes('+') ? `${Math.round(max * ROBUX_PER_USD)}+` : Math.round(max * ROBUX_PER_USD);
+            return `~${Math.round(min * ROBUX_PER_USD)} - ${maxDisplay} Robux`;
+        }
+        return "N/A";
+    }
+
+    function updateRobuxValues() {
+        document.getElementById('simple1-rbx').textContent = convertToRobux("$1 - $3");
+        document.getElementById('simple2-rbx').textContent = convertToRobux("$3 - $8");
+        document.getElementById('sets1-rbx').textContent = convertToRobux("$8 - $25");
+        document.getElementById('sets2-rbx').textContent = convertToRobux("$25 - $50+");
+        document.getElementById('env1-rbx').textContent = convertToRobux("$10 - $40");
+        document.getElementById('env2-rbx').textContent = convertToRobux("$40 - $80");
+        document.getElementById('env3-rbx').textContent = convertToRobux("$80 - $120+");
+    }
+
+    detailedPricingBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      updateRobuxValues(); 
+      detailedPricingModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    closeDetailedPricingBtn.addEventListener('click', function() {
+      detailedPricingModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    window.addEventListener('click', function(e) {
+      if (e.target === detailedPricingModal) {
+        detailedPricingModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.style.display === 'flex') {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; 
+      if (e.key === 'Escape') {
+        if (agreementModal.style.display === 'flex') {
+          agreementModal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+        if (orderModal.style.display === 'flex') {
+          orderModal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        }
+        if (detailedPricingModal.style.display === 'flex') {
+            detailedPricingModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        const lightboxModal = document.getElementById('lightboxModal');
+        if (lightboxModal && lightboxModal.style.display === 'flex') {
+            lightboxModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
       }
     });
   </script>
 </body>
 </html>
+```
